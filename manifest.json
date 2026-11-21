@@ -1,0 +1,25 @@
+{
+	"manifest_version": 3,
+	"name": "UniPd Moodle autofiller",
+	"version": "1.0",
+	"description": "Chrome extension that fixes the autofill for UniPd's Moodle SSO",
+	"content_scripts": [
+		{
+			"matches": ["https://shibidp.cca.unipd.it/idp/profile/SAML2/Redirect/SSO?execution=*"],
+			"run_at": "document_start",
+			"js": ["intercept_function.js"],
+			"world": "MAIN"
+		},
+		{
+			"matches": ["https://shibidp.cca.unipd.it/idp/profile/SAML2/Redirect/SSO?execution=*"],
+			"run_at": "document_end",
+			"js": ["adjust_fields.js", "load_username.js"]
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"matches": ["<all_urls>"],
+			"resources": ["config.json"]
+		}
+	]
+}
